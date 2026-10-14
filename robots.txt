@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kibovrwa.github.io/featured-on/sitemap.xml
