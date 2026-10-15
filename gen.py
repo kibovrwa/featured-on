@@ -1,5 +1,6 @@
 import json,html,datetime
 d=json.load(open('/workspace/backlinks-push-2026-10/crawl-bing-success/urls.json'))
+d=[x for x in d if x.get('status','LIVE')=='LIVE']
 d=[x for x in d if not x.get('indexed')]+[x for x in d if x.get('indexed')]
 B="https://kibovrwa.github.io/featured-on/"
 now=datetime.datetime.now(datetime.UTC).strftime('%Y-%m-%dT%H:%M:%SZ')
