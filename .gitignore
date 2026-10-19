@@ -1,0 +1,6 @@
+mirrors-state.json
+featured-on-list/
+__pycache__/
+mirrors.py
+verify_mirrors.py
+*.bak

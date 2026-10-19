@@ -12,3 +12,10 @@ for s,us in sorted(by.items()):
 open('index.html','w').write(''.join(h))
 open('feed.xml','w').write(f'<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom"><title>Featured on</title><id>{B}</id><updated>{now}</updated><link rel="hub" href="https://pubsubhubbub.appspot.com/"/><link rel="self" href="{B}feed.xml"/>'+''.join(f'<entry><title>{html.escape(x["platform"])} - {x["site"]}</title><id>{html.escape(x["url"])}</id><link href="{html.escape(x["url"])}"/><updated>{now}</updated></entry>' for x in d)+'</feed>')
 open('sitemap.xml','w').write(f'<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>{B}</loc><lastmod>{now[:10]}</lastmod></url><url><loc>{B}feed.xml</loc></url></urlset>')
+# mirrors footer (from mirrors.py state; no secrets, URLs only)
+import os
+if os.path.exists('/workspace/bl-hub/mirrors-state.json'):
+  _m=json.load(open('/workspace/bl-hub/mirrors-state.json')).get('_urls',{})
+  _l=[u for v in _m.values() for u in v.get('all',[v['url']])]
+  if _l:
+    open('index.html','a').write('<h2>Mirrors</h2><ul>'+''.join(f'<li><a href="{html.escape(u)}">{html.escape(u)}</a></li>' for u in _l)+'</ul>')
