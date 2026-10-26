@@ -12,6 +12,13 @@ _P='/workspace/backlinks-push-2026-10/crawl-bing-success/INDEX-CHECK-20261022.js
 if _o.path.exists(_P):
   _pr=[r for r in json.load(open(_P)).get('rows',[]) if r.get('bing')!='INDEXED' and r.get('own_article') and not r.get('noindex')]
   if _pr: h.append('<h2>Recently featured</h2><ul>'+''.join(f'<li><a href="{html.escape(r["url"])}">{html.escape(r["platform"])} - {html.escape(r["site"])}</a></li>' for r in _pr)+'</ul>')
+_PP='/workspace/bl-hub/priority.json'
+if _o.path.exists(_PP):
+  _pp=json.load(open(_PP)); _live={x['url'] for x in d}
+  _pl=[u for u in _pp.get('urls',[]) if u in _live]
+  if _pl:
+    h.append('<h2>Priority listings</h2><ul>'+''.join(f'<li><a href="{html.escape(u)}">{html.escape(u)}</a></li>' for u in _pl)+'</ul>')
+    _ps=set(_pl); d=[x for x in d if x['url'] in _ps]+[x for x in d if x['url'] not in _ps]
 for s,us in sorted(by.items()):
   h.append(f'<h2>{html.escape(s)}</h2><ul>'+''.join(f'<li><a href="{html.escape(u)}">{html.escape(u)}</a></li>' for u in us)+'</ul>')
 open('index.html','w').write(''.join(h))
